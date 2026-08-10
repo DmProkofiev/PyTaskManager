@@ -1,4 +1,3 @@
-
 /* ГЛАВНОЕ ОКНО */
 QMainWindow {
     background-color: #f5f5f7;
@@ -25,7 +24,7 @@ QTabBar::tab {
 
 QTabBar::tab:selected {
     color: #1c1c1e;
-    border-bottom: 3px solid #007aff;
+    border-bottom: 3px solid #34c759;
 }
 
 QTabBar::tab:hover:!selected {
@@ -33,7 +32,7 @@ QTabBar::tab:hover:!selected {
     border-bottom: 3px solid #c7c7cc;
 }
 
-/* ЛЕЙБЛЫ  */
+/* ЛЕЙБЛЫ */
 QLabel {
     color: #1c1c1e;
     font-family: "Times New Roman", serif;
@@ -49,7 +48,7 @@ QLabel.card-title {
     border-bottom: 1px solid #e5e5ea;
 }
 
-/*  DASHBOARD  */
+/* Главная Панель КАРТОЧКИ */
 QFrame.card {
     border-radius: 16px;
     padding: 18px 20px;
@@ -57,47 +56,8 @@ QFrame.card {
     background-color: #ffffff;
 }
 
-/* БАЛАНС – синий */
-QFrame#frameBalance {
-    background: qlineargradient(
-        x1: 0, y1: 0, x2: 1, y2: 1,
-        stop: 0 rgba(0, 122, 255, 0.08),
-        stop: 1 rgba(0, 122, 255, 0.02)
-    );
-    border-color: #007aff;
-}
-
-QFrame#frameBalance:hover {
-    background: qlineargradient(
-        x1: 0, y1: 0, x2: 1, y2: 1,
-        stop: 0 rgba(0, 122, 255, 0.15),
-        stop: 1 rgba(0, 122, 255, 0.05)
-    );
-    border-color: #0055cc;
-    box-shadow: 0 4px 20px rgba(0, 122, 255, 0.15);
-}
-
-/* РАСХОД – красный */
-QFrame#frameExpenses {
-    background: qlineargradient(
-        x1: 0, y1: 0, x2: 1, y2: 1,
-        stop: 0 rgba(255, 59, 48, 0.08),
-        stop: 1 rgba(255, 59, 48, 0.02)
-    );
-    border-color: #ff3b30;
-}
-QFrame#frameExpenses:hover {
-    background: qlineargradient(
-        x1: 0, y1: 0, x2: 1, y2: 1,
-        stop: 0 rgba(255, 59, 48, 0.15),
-        stop: 1 rgba(255, 59, 48, 0.05)
-    );
-    border-color: #cc2d24;
-    box-shadow: 0 4px 20px rgba(255, 59, 48, 0.15);
-}
-
-/* ДОХОДЫ – зелёный */
-QFrame#frameIncomes {
+/* Задачи текущие – зелёный */
+QFrame#frameTodayTasks {
     background: qlineargradient(
         x1: 0, y1: 0, x2: 1, y2: 1,
         stop: 0 rgba(52, 199, 89, 0.08),
@@ -105,8 +65,7 @@ QFrame#frameIncomes {
     );
     border-color: #34c759;
 }
-
-QFrame#frameIncomes:hover {
+QFrame#frameTodayTasks:hover {
     background: qlineargradient(
         x1: 0, y1: 0, x2: 1, y2: 1,
         stop: 0 rgba(52, 199, 89, 0.15),
@@ -116,8 +75,27 @@ QFrame#frameIncomes:hover {
     box-shadow: 0 4px 20px rgba(52, 199, 89, 0.15);
 }
 
-/* ОБЯЗАТЕЛЬСТВА – оранжевый */
-QFrame#frameObligations {
+/* Выполнено – синий */
+QFrame#frameCompletedTasks {
+    background: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 1,
+        stop: 0 rgba(0, 122, 255, 0.08),
+        stop: 1 rgba(0, 122, 255, 0.02)
+    );
+    border-color: #007aff;
+}
+QFrame#frameCompletedTasks:hover {
+    background: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 1,
+        stop: 0 rgba(0, 122, 255, 0.15),
+        stop: 1 rgba(0, 122, 255, 0.05)
+    );
+    border-color: #0055cc;
+    box-shadow: 0 4px 20px rgba(0, 122, 255, 0.15);
+}
+
+/* В ожидании – жёлтый */
+QFrame#framePendingTasks {
     background: qlineargradient(
         x1: 0, y1: 0, x2: 1, y2: 1,
         stop: 0 rgba(255, 149, 0, 0.08),
@@ -125,7 +103,7 @@ QFrame#frameObligations {
     );
     border-color: #ff9500;
 }
-QFrame#frameObligations:hover {
+QFrame#framePendingTasks:hover {
     background: qlineargradient(
         x1: 0, y1: 0, x2: 1, y2: 1,
         stop: 0 rgba(255, 149, 0, 0.15),
@@ -135,29 +113,28 @@ QFrame#frameObligations:hover {
     box-shadow: 0 4px 20px rgba(255, 149, 0, 0.15);
 }
 
-/* ЗНАЧЕНИЯ НА КАРТОЧКАХ  */
-QLabel#label_balance_value {
+/* Просрочено – красный */
+QFrame#frameOverdueTasks {
+    background: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 1,
+        stop: 0 rgba(255, 59, 48, 0.08),
+        stop: 1 rgba(255, 59, 48, 0.02)
+    );
+    border-color: #ff3b30;
+}
+QFrame#frameOverdueTasks:hover {
+    background: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 1,
+        stop: 0 rgba(255, 59, 48, 0.15),
+        stop: 1 rgba(255, 59, 48, 0.05)
+    );
+    border-color: #cc2d24;
+    box-shadow: 0 4px 20px rgba(255, 59, 48, 0.15);
+}
+
+/* ЗНАЧЕНИЯ НА КАРТОЧКАХ */
+QLabel#label_today_tasks_value {
     font-size: 34px;
-    font-weight: bold;
-    color: #007aff;
-    padding: 8px 16px;
-    background: rgba(0, 122, 255, 0.06);
-    border-radius: 10px;
-    border: 1px solid rgba(0, 122, 255, 0.15);
-}
-
-QLabel#label_expenses_value {
-    font-size: 28px;
-    font-weight: bold;
-    color: #ff3b30;
-    padding: 8px 16px;
-    background: rgba(255, 59, 48, 0.06);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 59, 48, 0.15);
-}
-
-QLabel#label_incomes_value {
-    font-size: 28px;
     font-weight: bold;
     color: #34c759;
     padding: 8px 16px;
@@ -166,7 +143,17 @@ QLabel#label_incomes_value {
     border: 1px solid rgba(52, 199, 89, 0.15);
 }
 
-QLabel#label_obligations_value {
+QLabel#label_completed_tasks_value {
+    font-size: 28px;
+    font-weight: bold;
+    color: #007aff;
+    padding: 8px 16px;
+    background: rgba(0, 122, 255, 0.06);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 122, 255, 0.15);
+}
+
+QLabel#label_pending_tasks_value {
     font-size: 28px;
     font-weight: bold;
     color: #ff9500;
@@ -176,13 +163,23 @@ QLabel#label_obligations_value {
     border: 1px solid rgba(255, 149, 0, 0.15);
 }
 
-/* ТАБЛИЦЫ  */
+QLabel#label_overdue_tasks_value {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff3b30;
+    padding: 8px 16px;
+    background: rgba(255, 59, 48, 0.06);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 59, 48, 0.15);
+}
+
+/* ТАБЛИЦЫ */
 QTableWidget {
     background-color: #ffffff;
     alternate-background-color: #f9f9fb;
     color: #1c1c1e;
     gridline-color: #e5e5ea;
-    selection-background-color: #007aff;
+    selection-background-color: #34c759;
     selection-color: #ffffff;
     border: 1px solid #d2d2d7;
     border-radius: 10px;
@@ -207,9 +204,9 @@ QTableWidget::item {
     padding: 8px;
 }
 
-/* КНОПКИ */
+/* КНОПКИ зелёный */
 QPushButton {
-    background-color: #007aff;
+    background-color: #34c759;
     color: white;
     border: none;
     padding: 10px 28px;
@@ -219,35 +216,61 @@ QPushButton {
     font-family: "Times New Roman", serif;
 }
 QPushButton:hover {
-    background-color: #0055cc;
+    background-color: #28a745;
 }
 QPushButton:pressed {
-    background-color: #003d99;
+    background-color: #1e7e34;
 }
 
-/* Кнопки удаления  красные */
-QPushButton#btnDeleteExpense,
-QPushButton#btnDeleteIncome,
-QPushButton#btnDeleteObligation {
+/* Кнопка удаления – красная */
+QPushButton#btnDelete, btnDelete_2,btnDelete_3,btnDelete_4 {
     background-color: #ff3b30;
 }
-QPushButton#btnDeleteExpense:hover,
-QPushButton#btnDeleteIncome:hover,
-QPushButton#btnDeleteObligation:hover {
+QPushButton#btnDelete:hover {
     background-color: #cc2d24;
 }
-QPushButton#btnDeleteExpense:pressed,
-QPushButton#btnDeleteIncome:pressed,
-QPushButton#btnDeleteObligation:pressed {
+QPushButton#btnDelete:pressed {
     background-color: #99221a;
 }
 
+/* Кнопка "Выполнить" – синяя */
+QPushButton#btnCompleteTask {
+    background-color: #007aff;
+}
+QPushButton#btnCompleteTask:hover {
+    background-color: #0055cc;
+}
+QPushButton#btnCompleteTask:pressed {
+    background-color: #003d99;
+}
+
+/* Кнопки таймера */
+QPushButton#btnStartWork {
+    background-color: #34c759;
+}
+QPushButton#btnStartWork:hover {
+    background-color: #28a745;
+}
+QPushButton#btnStartBreak {
+    background-color: #ff9500;
+}
+QPushButton#btnStartBreak:hover {
+    background-color: #e68a00;
+}
+QPushButton#btnStopTimer {
+    background-color: #ff3b30;
+}
+QPushButton#btnStopTimer:hover {
+    background-color: #cc2d24;
+}
+
+/* Кнопки навигации (стрелки) – прозрачные */
 QPushButton#btnIncomePrevMonth,
 QPushButton#btnIncomeNextMonth,
 QPushButton#btnExpensePrevMonth,
 QPushButton#btnExpenseNextMonth {
     background-color: transparent;
-    color: #a8b2d1;
+    color: #6e6e73;
     border: none;
     padding: 8px 12px;
     font-size: 18px;
@@ -257,18 +280,12 @@ QPushButton#btnIncomePrevMonth:hover,
 QPushButton#btnIncomeNextMonth:hover,
 QPushButton#btnExpensePrevMonth:hover,
 QPushButton#btnExpenseNextMonth:hover {
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.1);
+    color: #1c1c1e;
+    background-color: rgba(0, 0, 0, 0.05);
     border-radius: 4px;
 }
-QPushButton#btnIncomePrevMonth:pressed,
-QPushButton#btnIncomeNextMonth:pressed,
-QPushButton#btnExpensePrevMonth:pressed,
-QPushButton#btnExpenseNextMonth:pressed {
-    color: #4caf50;
-}
 
-/*  ПОЛЯ ВВОДА  */
+/* ПОЛЯ ВВОДА */
 QLineEdit {
     background-color: #ffffff;
     color: #1c1c1e;
@@ -279,12 +296,74 @@ QLineEdit {
     font-family: "Times New Roman", serif;
 }
 QLineEdit:focus {
-    border: 2px solid #007aff;
+    border: 2px solid #34c759;
     background-color: #f5f5f7;
 }
 QLineEdit::placeholder {
     color: #8e8e93;
     font-style: italic;
+}
+
+/* ОПИСАНИЕ */
+QTextEdit#textEditTaskDescription {
+    background-color: #ffffff;
+    color: #1c1c1e;
+    border: 2px solid #d2d2d7;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: "Times New Roman", serif;
+}
+
+QTextEdit#textEditTaskDescription:focus {
+    border: 2px solid #34c759;
+    background-color: #f5f5f7;
+}
+
+QTextEdit#textEditTaskDescription {
+    min-height: 150px;
+    max-height: 10000px;
+}
+
+/* ОПИСАНИЕ ЗАМЕТКИ */
+QTextEdit#textEditTaskNote {
+    background-color: #ffffff;
+    color: #1c1c1e;
+    border: 2px solid #d2d2d7;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: "Times New Roman", serif;
+}
+
+QTextEdit#textEditTaskDescription:focus {
+    border: 2px solid #34c759;
+    background-color: #f5f5f7;
+}
+
+QTextEdit#textEditTaskDescription {
+    min-height: 150px;
+    max-height: 10000px;
+}
+
+QTextEdit#content_edit {
+    background-color: #ffffff;
+    color: #1c1c1e;
+    border: 2px solid #d2d2d7;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: "Times New Roman", serif;
+}
+
+QTextEdit#textEditTaskDescription:focus {
+    border: 2px solid #34c759;
+    background-color: #f5f5f7;
+}
+
+QTextEdit#textEditTaskDescription {
+    min-height: 150px;
+    max-height: 10000px;
 }
 
 /* КОМБОБОКСЫ */
@@ -298,7 +377,7 @@ QComboBox {
     font-family: "Times New Roman", serif;
 }
 QComboBox:focus {
-    border: 2px solid #007aff;
+    border: 2px solid #34c759;
 }
 QComboBox::drop-down {
     border: none;
@@ -311,7 +390,7 @@ QComboBox QAbstractItemView {
     background-color: #ffffff;
     color: #1c1c1e;
     border: 2px solid #d2d2d7;
-    selection-background-color: #007aff;
+    selection-background-color: #34c759;
     selection-color: #ffffff;
 }
 
@@ -335,15 +414,47 @@ QMenu {
     font-family: "Times New Roman", serif;
 }
 QMenu::item:selected {
-    background-color: #007aff;
+    background-color: #34c759;
     color: white;
 }
 
-/* СТАТУС-БАР  */
+/* СТАТУС-БАР */
 QStatusBar {
     background-color: #f5f5f7;
     color: #6e6e73;
     font-size: 12px;
     font-family: "Times New Roman", serif;
     border-top: 1px solid #d2d2d7;
+}
+
+/* ТАЙМЕР */
+QLabel#labelTimerTime {
+    font-size: 48px;
+    font-weight: bold;
+    color: #34c759;
+}
+
+QLabel#labelTimerStatsWork {
+    font-size: 14px;
+    color: #34c759;
+    font-weight: bold;
+}
+
+QLabel#labelTimerStatsBreak {
+    font-size: 14px;
+
+    QTableWidget#tableSessions {
+    background-color: #ffffff;
+    alternate-background-color: #f9f9fb;
+    color: #1c1c1e;
+    gridline-color: #e5e5ea;
+    selection-background-color: #34c759;
+    selection-color: #ffffff;
+    border: 1px solid #d2d2d7;
+    border-radius: 10px;
+}
+
+QComboBox#comboBoxTimerTask,
+QComboBox#comboBoxNoteTask {
+    min-width: 150px;
 }

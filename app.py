@@ -1,11 +1,11 @@
-import os
 import sys
-from dependency_injector.wiring import Provide, inject
+import os
 from PySide6.QtWidgets import QApplication
-from ViewModels.main_viewmodel import MainViewModel
-from Views.main_window import MainWindow
+from dependency_injector.wiring import Provide, inject
 from container import AppContainer
-
+from Infrastructure.database import init_db
+from Views.main_window import MainWindow
+from ViewModels.main_viewmodel import MainViewModel
 
 def resource_path(relative_path):
     try:
@@ -17,8 +17,8 @@ def resource_path(relative_path):
 @inject
 def main(viewModel: MainViewModel = Provide[AppContainer.viewModel]) -> None:
     app = QApplication(sys.argv)
+    init_db("source.db")
     style_path = resource_path("Resources/styles.qss")
-
     with open(style_path, "r", encoding="utf-8") as f:
         app.setStyleSheet(f.read())
 

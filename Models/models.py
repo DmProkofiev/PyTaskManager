@@ -42,6 +42,9 @@ class Task(ABC):
         return (self.status != TaskStatus.COMPLETED and
                 self.due_date and self.due_date < date.today())
 
+    def display_name(self) -> str:
+        return { TaskStatus.PENDING: "В процесее", TaskStatus.COMPLETED: "Завершено", TaskStatus.OVERDUE: "Просрочено" }[self]
+
 # Наследуемый Класс: Разовая задача
 @dataclass
 class OnceTask(Task):
@@ -106,8 +109,8 @@ class YearlyTask(Task):
 # Модель Timer
 @dataclass
 class TimerSession:
-    id: Optional[int]
-    task_id: Optional[int]
+    id: Optional[int] = None
+    task_id: Optional[int] = None
     start_time: datetime = field(default_factory=datetime.now)
     end_time: Optional[datetime] = None
     duration_seconds: int = 0
@@ -137,8 +140,8 @@ class TimerSession:
 # Модель Note
 @dataclass
 class Note:
-    id: Optional[int]
-    task_id: Optional[int]
+    id: Optional[int] = None
+    task_id: Optional[int] = None
     title: str=""
     content: str=""
     created_at: datetime = field(default_factory=datetime.now)
