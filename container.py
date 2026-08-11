@@ -1,11 +1,5 @@
 from dependency_injector import containers, providers
 from Infrastructure.unit_of_work import SqliteUnitOfWork
-from Interfaces.IUnitOfWork import IUnitOfWork
-from Interfaces.ITaskService import ITaskService
-from Interfaces.ISessionService import ISessionService
-from Interfaces.INoteService import INoteService
-from Interfaces.IDialogService import IDialogService
-from Interfaces.ITrayService import ITrayService
 from Services.task_service import TaskService
 from Services.session_service import SessionService
 from Services.note_service import NoteService

@@ -14,7 +14,7 @@ class TrayService(ITrayService):
         return cls._instance
 
     def setup_tray(self, window, view_model, icon_path: str) -> None:
-        if TrayService._tray_icon is not None:
+        if self._tray_icon is not None:
             return
         if not QSystemTrayIcon.isSystemTrayAvailable():
             return
@@ -29,6 +29,7 @@ class TrayService(ITrayService):
         self._tray_icon.setToolTip("FIBER Task Manager")
 
         menu = QMenu()
+
         for label, handler in [
             ("Показать", view_model.show_window),
             ("Скрыть", view_model.hide_window),
@@ -51,6 +52,7 @@ class TrayService(ITrayService):
             self._tray_icon.hide()
             self._tray_icon = None
 
+    # Оповещение
     def show_message(self, title: str, msg: str, icon=QSystemTrayIcon.Information, msecs: int = 2000) -> None:
         if self._tray_icon:
             self._tray_icon.showMessage(title, msg, icon, msecs)

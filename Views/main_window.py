@@ -1,7 +1,7 @@
 import os
 import sys
 from PySide6.QtGui import QIcon
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QApplication
 from ViewModels.main_viewmodel import MainViewModel
 from .ui_main_window import Ui_MainWindow
 
@@ -27,6 +27,18 @@ class MainWindow(QMainWindow):
 
         self._viewModel.timer_tick.connect(self.ui.labelTimerTime.setText)
         self._viewModel.error_occurred.connect(self._show_error)
+
+        screen = QApplication.primaryScreen()
+
+        self._center_screen()
+
+    def _center_screen(self):
+        screen = QApplication.primaryScreen()
+        if screen is not None:
+            center = screen.availableGeometry().center()
+            frame_geo = self.frameGeometry()
+            frame_geo.moveCenter(center)
+            self.move(frame_geo.topLeft())
 
     def _show_error(self, message: str):
         from Services.dialog_service import DialogService

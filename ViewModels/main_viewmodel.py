@@ -3,8 +3,7 @@ from datetime import date, datetime
 from typing import List, Optional
 from PySide6.QtCore import QObject, Signal, Qt, QTimer
 from PySide6.QtGui import QColor
-from PySide6.QtWidgets import QTableWidgetItem, QApplication, QSystemTrayIcon
-
+from PySide6.QtWidgets import QTableWidgetItem, QApplication, QSystemTrayIcon, QHeaderView, QSizePolicy
 from Interfaces.IDialogService import IDialogService
 from Interfaces.INoteService import INoteService
 from Interfaces.ISessionService import ISessionService
@@ -44,18 +43,21 @@ class MainViewModel(QObject):
         self._timer = None
         self.load_data()
 
+        self.tray_flag = False
+
     # Покдлючение кнопок
     def _connect_buttons(self) -> None:
         self._ui.btnAddTask.clicked.connect(self.add_task)
         self._ui.btnUpdateTask.clicked.connect(self.update_task)
         self._ui.btnUpdateNote.clicked.connect(self.update_note)
         self._ui.btnDelete.clicked.connect(self.delete_task)
+        self._ui.btnDelete_3.clicked.connect(self.delete_note)
+        self._ui.btnDelete_2.clicked.connect(self.delete_session)
         self._ui.btnCompleteTask.clicked.connect(self.complete_task)
         self._ui.btnStartWork.clicked.connect(self.start_work)
         self._ui.btnStartBreak.clicked.connect(self.start_break)
         self._ui.btnStopTimer.clicked.connect(self.stop_timer)
         self._ui.btnAddNote.clicked.connect(self.add_note)
-        self._ui.btnDelete_2.clicked.connect(self.delete_session)
 
 # UI
 
@@ -65,14 +67,27 @@ class MainViewModel(QObject):
         self._ensure_timer_running()
 
     def set_window(self, window) -> None:
+        if self.tray_flag:
+            return
         self._window = window
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         icon_path = os.path.join(base_dir, "Resources", "FIBERTMico.png")
         self._tray_service.setup_tray(window, self, icon_path)
+        self.tray_flag = True
 
     def _setup_ui(self) -> None:
         if not self._ui:
             return
+        tables = [self._ui.tableRecentTasks, self._ui.tableTasks,
+                  self._ui.tableSessions, self._ui.tableNotes]
+        for tbl in tables:
+            tbl.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+            tbl.setWordWrap(True)
+            tbl.setTextElideMode(Qt.ElideNone)
+            tbl.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+            header = tbl.horizontalHeader()
+            for col in range(tbl.columnCount()):
+                header.setSectionResizeMode(col, QHeaderView.Interactive)
         self._fill_comboboxes()
         self._connect_buttons()
         self._update_all_ui()
@@ -133,6 +148,7 @@ class MainViewModel(QObject):
         for row, item in enumerate(data):
             for col, value in enumerate(row_mapper(item)):
                 table.setItem(row, col, value)
+        table.resizeRowsToContents()
         table.repaint()
 
     def _update_timer_stats(self) -> None:
@@ -191,7 +207,7 @@ class MainViewModel(QObject):
             QTableWidgetItem(task.title),
             priority_item,
             status_item,
-            QTableWidgetItem(task.due_date.strftime("%d.%m.%Y")),
+            QTableWidgetItem(task.due_date.strftime("%d.%m.%Y") if task.due_date else ""),
         ]
 
     # Отображение: Таблица задач
@@ -336,7 +352,7 @@ class MainViewModel(QObject):
     # CREATE
     def add_note(self) -> None:
         title = self._ui.lineEditNoteTitle.text()
-        content = self._ui.lineEditNoteContent.text()
+        content = self._ui.textEditTaskNote.toPlainText()
         if not title.strip() and not content.strip():
             self._dialog.show_warning(self._window, "Заполните заголовок или текст")
             return
@@ -348,7 +364,8 @@ class MainViewModel(QObject):
             self._note_service.add(note)
             self.load_data()
             self._ui.lineEditNoteTitle.clear()
-            self._ui.lineEditNoteContent.clear()
+            self._ui.textEditNoteContent.clear()
+
             self._dialog.show_info(self._window, "Заметка добавлена")
         except ValueError as e:
             self.error_occurred.emit(str(e))
@@ -371,16 +388,29 @@ class MainViewModel(QObject):
 
 
     # DELETE
+    def delete_note(self):
+        row = self._ui.tableNotes.currentRow()
+        if row < 0:
+            self._dialog.show_warning(self._window, "Выберите запись")
+            return
+        if not self._dialog.show_question(self._window, "Удалить запись?"):
+            return
+        note = self._notes[row]
+        self._note_service.delete(note.id)
+        self.load_data()
 
 
 # SESSION
 
     def _ensure_timer_running(self) -> None:
-        if self._timer is None:
-            self._timer = QTimer()
-            self._timer.timeout.connect(self._on_timer_tick)
-        if not self._timer.isActive():
-            self._timer.start(1000)
+        if self._timer is not None and self._timer.isActive():
+            return
+        if self._timer is not None:
+            self._timer.stop()
+            self._timer = None
+        self._timer = QTimer()
+        self._timer.timeout.connect(self._on_timer_tick)
+        self._timer.start(1000)
 
     # CREATE WORK
     def start_work(self):
@@ -429,12 +459,15 @@ class MainViewModel(QObject):
         self.load_data()
 
     def _on_timer_tick(self) -> None:
-        self._ensure_timer_running()
-        if self._current_session and self._current_session.is_active():
-            time_str = self._current_session.get_duration_string()
-            self.timer_tick.emit(time_str)
-        else:
-            self.timer_tick.emit("00:00:00")
+        try:
+            self._ensure_timer_running()
+            if self._current_session and self._current_session.is_active():
+                time_str = self._current_session.get_duration_string()
+                self.timer_tick.emit(time_str)
+            else:
+                self.timer_tick.emit("00:00:00")
+        except RuntimeError:
+            pass
 
     # DELETE
     def delete_session(self) -> None:
@@ -450,6 +483,7 @@ class MainViewModel(QObject):
         self.load_data()
 
 # TRAY
+
     def show_window(self) -> None:
         if self._window:
             self._window.show()

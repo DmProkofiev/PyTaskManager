@@ -41,6 +41,6 @@ class NoteDialog(QDialog):
     def update_object(self) -> Note:
         if self._item is None:
             title = self.title_edit.text()
-            content = self.content_edit.text()
+            content = self.content_edit.toPlainText()
             self._item = Note(id = self._original.id,title = title,content = content)
         return self._item

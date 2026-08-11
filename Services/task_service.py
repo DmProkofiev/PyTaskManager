@@ -19,9 +19,9 @@ class TaskService(ITaskService):
         with self._uow:
             return self._uow.tasks.get_all()
 
-    def get_by_id(self, task_id: int) -> Optional[Task]:
-        with self._uow:
-            return self._uow.tasks.get_by_id(task_id)
+    # def get_by_id(self, task_id: int) -> Optional[Task]:
+    #     with self._uow:
+    #         return self._uow.tasks.get_by_id(task_id)
 
     def get_for_today(self) -> List[Task]:
         with self._uow:

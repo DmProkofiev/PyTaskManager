@@ -5,7 +5,6 @@ from Models import Note, Task
 from Views.dialog.note_dialog import NoteDialog
 from Views.dialog.task_dialog import TaskDialog
 
-
 class DialogService(IDialogService):
     @staticmethod
     def show_error(parent: Optional[QWidget], message: str, title: str = "Ошибка") -> None:

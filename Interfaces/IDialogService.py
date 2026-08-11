@@ -14,5 +14,5 @@ class IDialogService:
     def update_note(self, note: Note, parent: Optional[QWidget]) -> Optional[Note]:
         raise NotImplementedError
 
-    def update_task(self, task: Task, parent: Optional[QWidget]) -> Optional[Note]:
+    def update_task(self, task: Task, parent: Optional[QWidget]) -> Optional[Task]:
         raise NotImplementedError

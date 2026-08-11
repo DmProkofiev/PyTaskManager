@@ -18,10 +18,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QDateEdit, QFrame,
     QGridLayout, QHBoxLayout, QHeaderView, QLabel,
-    QLineEdit, QMainWindow, QMenu, QMenuBar,
-    QPushButton, QSizePolicy, QSpacerItem, QStatusBar,
-    QTabWidget, QTableWidget, QTableWidgetItem, QTextEdit,
-    QVBoxLayout, QWidget)
+    QLineEdit, QMainWindow, QPushButton, QSizePolicy,
+    QSpacerItem, QTabWidget, QTableWidget, QTableWidgetItem,
+    QTextEdit, QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -165,7 +164,7 @@ class Ui_MainWindow(object):
 
         self.dateEditDueDate = QDateEdit(self.tabTasks)
         self.dateEditDueDate.setObjectName(u"dateEditDueDate")
-        self.dateEditDueDate.setDateTime(QDateTime(QDate(2025, 12, 10), QTime(0, 0, 0)))
+        self.dateEditDueDate.setDateTime(QDateTime(QDate(2025, 12, 8), QTime(0, 0, 0)))
         self.dateEditDueDate.setCalendarPopup(True)
 
         self.horizontalLayoutTasks.addWidget(self.dateEditDueDate)
@@ -432,6 +431,13 @@ class Ui_MainWindow(object):
 
         self.comboBoxNoteTask = QComboBox(self.tabNotes)
         self.comboBoxNoteTask.setObjectName(u"comboBoxNoteTask")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.comboBoxNoteTask.sizePolicy().hasHeightForWidth())
+        self.comboBoxNoteTask.setSizePolicy(sizePolicy3)
+        self.comboBoxNoteTask.setMinimumSize(QSize(160, 0))
+        self.comboBoxNoteTask.setMaximumSize(QSize(16777215, 16777215))
 
         self.horizontalLayoutNotes.addWidget(self.comboBoxNoteTask)
 
@@ -483,26 +489,10 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.tabWidget)
 
         MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QMenuBar(MainWindow)
-        self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1100, 20))
-        self.menuFile = QMenu(self.menubar)
-        self.menuFile.setObjectName(u"menuFile")
-        self.menuHelp = QMenu(self.menubar)
-        self.menuHelp.setObjectName(u"menuHelp")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(MainWindow)
-        self.statusbar.setObjectName(u"statusbar")
-        MainWindow.setStatusBar(self.statusbar)
-
-        self.menubar.addAction(self.menuFile.menuAction())
-        self.menubar.addAction(self.menuHelp.menuAction())
-        self.menuFile.addAction(self.actionExit)
-        self.menuHelp.addAction(self.actionAbout)
 
         self.retranslateUi(MainWindow)
 
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -591,7 +581,5 @@ class Ui_MainWindow(object):
         ___qtablewidgetitem18 = self.tableNotes.horizontalHeaderItem(3)
         ___qtablewidgetitem18.setText(QCoreApplication.translate("MainWindow", u"\u0422\u0435\u043a\u0441\u0442", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabNotes), QCoreApplication.translate("MainWindow", u"\u0417\u0430\u043c\u0435\u0442\u043a\u0438", None))
-        self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"\u0424\u0430\u0439\u043b", None))
-        self.menuHelp.setTitle(QCoreApplication.translate("MainWindow", u"\u0421\u043f\u0440\u0430\u0432\u043a\u0430", None))
     # retranslateUi
 
